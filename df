@@ -1,0 +1,40 @@
+[1mdiff --git a/wp-content/plugins/custom-music-reviews/custom-music-reviews.php b/wp-content/plugins/custom-music-reviews/custom-music-reviews.php[m
+[1mindex 0c32376..2e6f3ca 100644[m
+[1m--- a/wp-content/plugins/custom-music-reviews/custom-music-reviews.php[m
+[1m+++ b/wp-content/plugins/custom-music-reviews/custom-music-reviews.php[m
+[36m@@ -1,4 +1,6 @@[m
+ <?php[m
+[32m+[m[32m# From: https://www.elegantthemes.com/blog/tips-tricks/how-to-create-a-wordpress-plugin[m
+[32m+[m
+ /**[m
+ * Plugin Name: Custom Music Reviews[m
+ * Plugin URI: https://www.elegantthemes.com/[m
+[36m@@ -66,5 +68,27 @@[m [mfunction genres_taxonomy() {[m
+         )[m
+     );[m
+ }[m
+[32m+[m
+ add_action( 'init', 'genres_taxonomy');[m
+ [m
+[32m+[m[32m// Function used to auto create Music Reviews page[m
+[32m+[m
+[32m+[m[32mfunction create_music_review_pages()[m
+[32m+[m[32m{[m
+[32m+[m	[32m//post status and options[m
+[32m+[m	[32m$post = array([m
+[32m+[m[32m          'comment_status' => 'open',[m
+[32m+[m[32m          'ping_status' =>  'closed' ,[m
+[32m+[m[32m          'post_date' => date('Y-m-d H:i:s'),[m
+[32m+[m[32m          'post_name' => 'music_review',[m
+[32m+[m[32m          'post_status' => 'publish' ,[m
+[32m+[m[32m          'post_title' => 'Music Reviews',[m
+[32m+[m[32m          'post_type' => 'page',[m
+[32m+[m[32m    );[m
+[32m+[m	[32m//insert page and save the id[m
+[32m+[m	[32m$newvalue = wp_insert_post( $post, false );[m
+[32m+[m	[32m//save the id in the database[m
+[32m+[m	[32mupdate_option( 'mrpage', $newvalue );[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mregister_activation_hook(__FILE__ , 'create_music_review_pages' );[m
+\ No newline at end of file[m
